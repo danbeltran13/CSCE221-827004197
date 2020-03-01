@@ -31,6 +31,13 @@ Node* push(Node* head, int new_data) {
    */
 
    // Your implementation here
+   
+   Node* new_head = new Node();
+  
+   new_head->data = new_data;
+   cout << "Pushing:" << new_data <<endl;
+   new_head->next = head;
+   return new_head;
 
 }
 
@@ -45,6 +52,16 @@ void print(Node* head) {
    */
 
    // Your implementation here
+   Node* currentNode = head;
+   if(head != NULL){
+   while(currentNode->next != NULL){
+	   cout << currentNode ->data << "->" ;
+	   currentNode = currentNode ->next;
+   }
+   
+   cout << currentNode ->data << "->" ;
+   }
+   cout << "NULL" <<endl;
 
 }
 
@@ -65,6 +82,9 @@ bool isEmpty(Node* head) {
    */
 
    // Your implementation here
+   if(head == NULL)
+	return true;
+	return false;
 
 }
 
@@ -76,7 +96,17 @@ int size(Node* head) {
     * returns: size of stack. If empty, return 0
    */
 
-   // Your implementation here
+   // Your implementation here 
+   if(head == NULL)
+		return 0;
+   int size = 1;
+   Node* currentNode = head;
+   while(currentNode -> next != NULL){
+	   size +=1;
+	   currentNode= currentNode->next;
+   }
+   return size;
+  
 
 }
 
@@ -91,6 +121,7 @@ int top(Node* head) {
    */
 
    // Your implementation here
+   return head->data;
 
 }
 
@@ -107,6 +138,9 @@ Node* pop(Node* head) {
    */
 
    // Your implementation here
+	Node* newHead = head->next;
+	delete head;
+	return newHead;
 
 }
 
@@ -124,6 +158,18 @@ Node* middle_element(Node* head) {
    */
 
    // Your implementation here
+   int sz = size(head);
+   if(sz ==1)
+		return head;
+	//assuming index starts at 0
+   int indexOfMiddle = sz/2;
+   
+   Node* curr = head;
+   for(int i =0; i < indexOfMiddle; ++i)
+	   curr = curr->next;
+   return curr;
+
+   
 
 }
 
@@ -141,5 +187,24 @@ Node* remove_middle_element(Node* head, Node* middle_node) {
    */
 
    // Your implementation here
+   if(head ==NULL )
+	return NULL;
+	else if(head->next == NULL){
+		delete head;
+		return NULL;
+	}
+	else{
+		Node* curr = head;
+		while(curr->next!=middle_node){
+			cout << curr->data<< endl;
+			curr = curr->next;
+		}
+		curr->next = curr->next->next;
+		//delete curr->next;
+		return head;
+	}
+	
+	
+		
 
 }
