@@ -8,8 +8,13 @@
  */
 void child(int p, const std::vector<int> Parent)
 {
-    // Remove below line after your implementation
-    return;
+    //index in array is the child, while the value is the parent
+	for (int i = 0; i < Parent.size();++i){
+		if(Parent[i] == p){
+			std::cout << i<< " " << std::endl;
+		}
+	}
+   
 }
 
 void testChild(const std::vector<int> Parent){
@@ -30,7 +35,7 @@ void testChild(const std::vector<int> Parent){
 
 int main(){
 
-    std::vector<int> Parent = {1, 3, 1, -1, 3};
+    std::vector<int> Parent ={1, 3, 1, -1, 3};
     std::cout << "first test:" << std::endl;
     testChild (Parent);
     
