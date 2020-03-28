@@ -188,8 +188,8 @@ class BinarySearchTree
     void remove( const Comparable & x )
     { remove( x, root );  }
 
-    void remove_right( const Comparable & x )
-    { remove_right( x, root ); }
+    void remove_left( const Comparable & x )
+    { remove_left( x, root ); }
 
 
 
@@ -279,10 +279,9 @@ class BinarySearchTree
      * Add the code in below function that performs remove right 
      * operation on the Binary tree.
      */
-    void remove_right( const Comparable & x, BinaryNode * & t )
+    void remove_left( const Comparable & x, BinaryNode * & t )
     {
-        // Remove below line after your implementation
-        return;
+        x;
     }
 
 
@@ -379,8 +378,13 @@ class BinarySearchTree
      */
     void preorder ( BinaryNode *t, ostream & out ) const
     {
-        // Remove below line after your implementation
-        return;
+		//root left right 
+        if( t != nullptr )
+        {
+			out << t->element << endl;
+            preorder( t->left, out );
+            preorder( t->right, out );
+        }
     }
 
     /**
@@ -390,8 +394,15 @@ class BinarySearchTree
      */
     int max_depth (BinaryNode *t ) const
     {
-        // Remove below line after your implementation
-        return 0;
+		if(t==nullptr){return 0;}
+        if(t->left == nullptr && t->right == nullptr)
+			return 1;
+		if(t->left != nullptr && t->right == nullptr)
+			return 1 + max_depth(t->left);
+		if(t->left == nullptr && t->right != nullptr)
+			return 1 + max_depth(t->right);
+		
+		return max(max_depth(t->left),max_depth(t->right));
     }
 
     /**
@@ -401,8 +412,15 @@ class BinarySearchTree
      */
     int min_depth (BinaryNode *t ) const
     {
-        // Remove below line after your implementation
-        return 0;
+		if(t==nullptr){return 0;}
+        if(t->left == nullptr && t->right == nullptr)
+			return 1;
+		if(t->left != nullptr && t->right == nullptr)
+			return 1 + min_depth(t->left);
+		if(t->left == nullptr && t->right != nullptr)
+			return 1 + min_depth(t->right);
+		
+		return min(min_depth(t->left),min_depth(t->right));
     }
 
     /**
@@ -412,8 +430,16 @@ class BinarySearchTree
      */
     int diameter (BinaryNode *t ) const
     {
-        // Remove below line after your implementation
-        return 0;
+		
+        if(t == nullptr){return 0;}
+		
+		int width = max_depth(t->left)+max_depth(t->right)+1;
+		int widthLeft = diameter(t->left);
+		int widthRight = diameter(t->right);
+		
+		int maxWidth = max(width,widthLeft);
+		maxWidth = max(maxWidth,widthRight);
+		return maxWidth;
     }
 
     /**
@@ -426,8 +452,33 @@ class BinarySearchTree
      */
     void levelorder ( BinaryNode *t, ostream & out ) const
     {
-        // Remove below line after your implementation
-        return;
+		if(t ==nullptr) return;
+		newQueue q1;
+		
+		BinaryNode* curr;
+		
+		q1.push(t);
+		q1.push(nullptr);
+		
+		while(q1.size()>1){
+			curr= q1.front();
+			q1.pop();
+			if(curr == nullptr){
+				q1.push(nullptr);
+			}
+			else{
+				
+				if(curr->left!=nullptr){
+					q1.push(curr->left);
+				}
+			    if(curr->right!=nullptr){
+					q1.push(curr->right);
+				}
+				
+				out << curr->element<<" "<<endl;
+			}
+			
+		}
     }
 
 
@@ -439,8 +490,19 @@ class BinarySearchTree
      */
     void LCA(BinaryNode *t, int x, int y, ostream & out) const
     {
-        // Remove below line after your implementation
-        return;
+        if(!contains(x,t)|| !contains(y,t)){
+			out << "Does Not Exist" << endl;
+		}else{
+			int value = t->element;
+			if(value >= min(x,y)&& value <= max(x,y)){
+				out << value << endl;
+			}
+			else if(value > x && value > y){
+				LCA(t->left,x,y,out);
+			}else if(value < x && value < y){
+				LCA(t->right,x,y,out);
+			}
+		}
     }
 
 
@@ -455,6 +517,74 @@ class BinarySearchTree
             return new 
                 BinaryNode{ t->element, clone( t->left ), clone( t->right ) };
     }
+	
+	class newQueue {
+		struct Node{
+			BinaryNode* t;
+			Node* next = nullptr;
+			Node* prev = nullptr;
+		};
+		private: 
+		Node* head;
+		Node* tail;
+		int s;
+		//public:
+		public: 
+			newQueue(){
+				head = nullptr;
+				tail = nullptr;
+				s =0;
+			}
+			
+			//Push at the end
+			void push (BinaryNode* h){
+				Node* insert = new Node;
+				insert->t = h;
+				
+				if(tail == nullptr){
+					head = insert;
+					tail = insert;
+				}else{
+					tail->next=insert;
+					insert->prev = tail;
+					tail=insert;
+					
+				}
+				s+=1;
+				
+			}
+			
+			//pops front
+			BinaryNode* pop(){
+				
+				
+				BinaryNode* toPop = head->t;
+				if(s == 1){
+					delete head;
+					head=nullptr;
+					tail=nullptr;
+					s =0;
+				}else{
+				head=head->next;
+				delete head->prev;
+				head->prev = nullptr;
+				
+				s -=1;
+				}
+				
+				
+				return toPop;
+				
+			}
+			
+			BinaryNode* front(){
+				return head->t;
+			}
+			int size(){
+				return s;
+			}
+			
+	};
 };
 
 #endif

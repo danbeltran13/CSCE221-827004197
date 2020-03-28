@@ -11,12 +11,12 @@ int main(){
     Tree.insert (4);
 
     Tree.remove(3);
-    Tree.remove_right(3);
+    Tree.remove_left(3);
 
-//    Tree.insert (6);
-//    Tree.insert (7);
-//    Tree.insert (9);
-//    Tree.insert (8);
+    //Tree.insert (6);
+    //Tree.insert (7);
+    //Tree.insert (9);
+    //Tree.insert (8);
     
     std::cout << "In-order:" << std::endl; 
     Tree.printTree();
@@ -28,14 +28,15 @@ int main(){
     Tree.levelorder();
 
     std::cout << "max depth:" << Tree.max_depth() << std::endl; 
-    std::cout << "max depth:" << Tree.min_depth() << std::endl; 
+    std::cout << "min depth:" << Tree.min_depth() << std::endl; 
     std::cout << "diameter:" << Tree.diameter() << std::endl;
 
-    Tree.LCA(5, 4);
+    std::cout << "LCA: ";
+	Tree.LCA(5, 4);
 
     BinarySearchTree<int> Tree1;
 
-    int range = 1e4;
+    int range = 1e5;
     std::random_device random_device;
     std::mt19937 random_engine(random_device());
     std::uniform_int_distribution<int> distribution(1, range);
@@ -52,6 +53,7 @@ int main(){
         Tree1.remove(r);
         Tree1.remove(r);
     }
+	
     std::cout << "Tree1 max= " << Tree1.max_depth() ;
     std::cout << " min= " << Tree1.min_depth();
     std::cout << " diff= " << Tree1.max_depth() - Tree1.min_depth() 
@@ -68,7 +70,7 @@ int main(){
     {
         auto const r = distribution(random_engine);
         Tree1.remove(r);
-        Tree1.remove_right(r);
+        Tree1.remove_left(r);
     }
 
 
