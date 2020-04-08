@@ -107,7 +107,13 @@ class OrderedMap
     int hashFunction( const Key & key ) {
         
         // Remove below line after your implementation
-        return 0;
+		int value = 0;
+		for(int i = 0; i<key.size();++i){
+				value += key[i];
+		}
+		
+		return value % MAP_MAX_SIZE;
+        
     }
 
     /** Q 4.2
@@ -120,10 +126,37 @@ class OrderedMap
      */
     void insert( int hash_key, const Key & key, const Value & value, KeyNode* t )
     {
-        // Remove below line after your implementation
-        return;
+		// if its the First key node in table
+        if(root_key->down == nullptr){
+			ValueNode* newValue = new ValueNode(key,value,nullptr);
+			KeyNode* newKey = new KeyNode(hash_key,newValue,nullptr);
+			root_key->down = newKey;
+		}
+		else {
+			
+			// if value exists
+			if(hash_key == t->hash_key){
+				ValueNode* newValue = new ValueNode(key,value,nullptr);
+				ValueNode* temp = t->right;
+				// Finds the end of the right
+				while(temp->right != nullptr){
+					temp=temp->right;
+				}
+				temp->right = newValue;
+			}
+			// creates new keynode it it knows for sure that keyNode doest exist for current hash_key
+			else if((t->down == nullptr)||((hash_key < t->down->hash_key) && (hash_key != t->down->hash_key))) {
+				ValueNode* newValue = new ValueNode(key,value,nullptr);
+				KeyNode* newKey = new KeyNode(hash_key,newValue,t->down);
+				t->down = newKey;
+				
+			}// Conitnoues untill it finds key node, or until it knows for sure it doesnt exist
+			else{
+				insert(hash_key,key,value,t->down);
+			}
+		
     }
-
+	}
 
     /**
      * Internal method to make a map empty.

@@ -17,14 +17,32 @@ int main()
     in.open(filename.c_str());
     getline(in,line);
 
+	stringstream f;
+	f<<line;
     string partOf;
+	string name;
+	unsigned long int max;
+	unsigned long int temp;
+	f>>name;
+	f>>max;
 
     while (in)
     {
-        // your implementation here for building coronamap
+	   stringstream f;
+	   getline(in,line);
+	   f << line;
+	   f >>partOf;
+	   f >>temp;
+	   
+	   if(temp>max){
+		   max = temp;
+		   name = partOf;
+	   }
+
+	   
     }
     
-    // your implementation here to print the country with max cases
+    cout << "Most confirmed cases are in "<<name<<endl;
     // E.g. Most confirmed cases are in USA
 
     return 0;

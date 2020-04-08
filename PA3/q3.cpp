@@ -32,7 +32,7 @@ int main()
   while(count < tableSize && !fail)
   {
     x= rand()%tableSize;// value to insert
-	quadInc=insertQuad(x,linear);
+	quadInc=insertQuad(x,quad);
 	if (quadInc < 0)
 		fail = true;
 	else
@@ -51,18 +51,51 @@ int main()
 
 int insertLinear(int x, vector<int> & linear)
 {
-  // Remove below line after your implementaion
+  if((linear[x] >= 0)){
+	  while(linear[x] >= 0){
+		  x += 1;
+	  }
+	  linear[x]= x;
+	  return 1;
+  }else{
+	  linear[x] = x;
+  }
   return 0;
 }
 
 int insertQuad(int x, vector<int> & quad)
 {
-  // Remove below line after your implementaion
+
+  if(quad[x] >= 0){
+	  int i=1;
+	  while(quad[x] >= 0){
+		  x += i^2;
+		  i+=1;
+	  }
+	  quad[x]=x;
+	  return 1;
+  }
+  quad[x]=x;
   return 0;
 }
 
 int insertDuble(int x, int dubHash, vector<int> & duble)
 {
-  // Remove below line after your implementaion
-  return 0;
+
+	return 0;
+	/*
+  if(duble[x]>=0){
+	  
+	  if((x+1)>=duble.size()){
+		insertDuble(0,dubHash,duble);
+		return 1;
+	  }
+	  x +=1;
+	  insertDuble(x,dubHash,duble);
+	  return 1;
+  }else{
+	 duble[x]=x;
+	 cout << x << endl;
+  }
+  return 0;*/
 }

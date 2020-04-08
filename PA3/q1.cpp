@@ -96,7 +96,7 @@ int main()
 	   stringstream f;
 	   f<< line;
 	   
-	   //Appends to indents
+	   //Appends words to indents
 	   while(f){
 		string t;
 		f>>t;
@@ -104,6 +104,7 @@ int main()
 			idents.insert(idents.end(),t);
 		}
 	   }
+	   
 		getline(in,line);
     }
 
