@@ -1,6 +1,7 @@
 #ifndef MIN_HEAP_H
 #define MIN_HEAP_H
 
+
 using namespace std;       
 
 class MinHeap
@@ -34,20 +35,56 @@ class MinHeap
 
     // Inserts a new key 'k' 
     void insertKey(int k) {
-        // Remove below line after your implementation
-        return;
+		
+        if(heap_size +1 > capacity){
+			int* newArray = new int [2*capacity];
+			capacity *= 2;
+			for(int i = 0; i < heap_size;++i){
+				newArray[i]=arr[i];
+			}
+			delete arr;
+			arr = newArray;
+		}
+		
+        if(heap_size == 0){
+			arr[0] = k;
+		}else{
+			
+			// Adds element to end of array and compares to parent until it is greater than parent
+			int pos = heap_size;
+			if(k>=arr[parent(pos)]){
+				arr[pos] = k;
+			}else{
+				while(k<arr[parent(pos)]){
+					int temp = arr[parent(pos)];
+					arr[(pos-1)/2] = k;
+					arr[pos] = temp;
+					pos = parent(pos);
+				
+				}
+			}
+			
+			
+		}
+		heap_size += 1;
     }
 
     // Extract the root which is the minimum element 
     int extractMin() {
-        // Remove below line after your implementation
-        return arr[0];
+		int min = arr[0];
+        if(heap_size==1){
+			heap_size =0;
+		}else{
+			//arr[0] = arr[heap_size-1];
+			 
+		}
+        return min;
     }
   
     // Decreases key value of key at index i to newVal 
     void decreaseKey(int i, int newVal) {
-        // Remove below line after your implementation
-        return;
+       
+        arr[i] = newVal;
     }
   
     // Deletes a key stored at index i 

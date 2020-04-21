@@ -1,11 +1,20 @@
 #include<iostream>
 #include<climits>
 #include"MinHeap.h"
+
 using namespace std;
 
 int kthSmallest(int arr[], int n, int k) {
-    // Remove below line after your implementation
-    return 0;
+    MinHeap h(n);
+	for(int i =0; i <n; ++i){
+		h.insertKey(arr[i]);
+	}
+	int min =0;
+	for(int i = 0; i < k; ++i){
+		min = h.extractMin();
+	}
+	
+    return min;
 }
 
 int main(){
